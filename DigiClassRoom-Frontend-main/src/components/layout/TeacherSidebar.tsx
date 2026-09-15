@@ -1,0 +1,61 @@
+import { 
+  BookOpen, 
+  ClipboardList, 
+  MessageCircle, 
+  PieChart, 
+  FileText,
+  Users,
+  TestTube,
+  CheckSquare,
+  Bell,
+  Video
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface TeacherSidebarProps {
+  activeSection: string;
+  onSectionChange: (section: string) => void;
+}
+
+const navigation = [
+  { name: "Dashboard", icon: PieChart, id: "dashboard" },
+  { name: "My Courses", icon: BookOpen, id: "courses" },
+  { name: "Meetings", icon: Video, id: "meetings" },
+  { name: "Assignment", icon: ClipboardList, id: "assignment" },
+  { name: "Test", icon: TestTube, id: "test" },
+  { name: "Manage Attendance", icon: CheckSquare, id: "attendance" },
+  { name: "Course Plan", icon: FileText, id: "course-plan" },
+  { name: "Student Progress", icon: Users, id: "progress" },
+  { name: "Notices", icon: Bell, id: "notices" },
+];
+
+const TeacherSidebar = ({ activeSection, onSectionChange }: TeacherSidebarProps) => {
+  return (
+    <aside className="w-64 bg-card border-r border-border h-[calc(100vh-4rem)] overflow-y-auto">
+      <nav className="p-4 space-y-2">
+        {navigation.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeSection === item.id;
+          
+          return (
+            <button
+              key={item.name}
+              onClick={() => onSectionChange(item.id)}
+              className={cn(
+                "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                isActive
+                  ? "bg-success text-success-foreground shadow-md"
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent"
+              )}
+            >
+              <Icon className="h-5 w-5" />
+              <span>{item.name}</span>
+            </button>
+          );
+        })}
+      </nav>
+    </aside>
+  );
+};
+
+export default TeacherSidebar;
